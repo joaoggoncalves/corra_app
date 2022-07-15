@@ -13,25 +13,28 @@ public class SpeedListener implements LocationListener {
 
     private final LinkedBlockingQueue<Float> lastSpeeds = new LinkedBlockingQueue<>();
 
-    private float lastAvg = 0.0f;
     public float avg = 0.0f;
 
     @Override
     public void onLocationChanged(Location location) {
 
+        //Obtem velocidade + conversão de m/s para km/h
         float speed = location.getSpeed() * 3.6f;
+
+        //Adiciona speed atual a queue
         lastSpeeds.add(speed);
 
+        //Cria media utilizando BUFFER_SIZE velocidades
         float sum = 0.0f;
         for(float f : lastSpeeds) {
             sum += f;
         }
         avg = sum / lastSpeeds.size();
 
-        Log.d(TAG,"Speed:" + speed + " avg:" + avg + " => " + lastSpeeds);
+        Log.d(TAG,"Speed:" + speed + " avg:" + avg + " => " + lastSpeeds + " accuracy: " + location.getSpeedAccuracyMetersPerSecond());
 
         while (lastSpeeds.size() > BUFFER_SIZE) {
-            //Logger.d(TAG, "Removing : " + lastSpeeds.size());
+            //Log.d(TAG, "Removendo : " + lastSpeeds.size());
             lastSpeeds.poll();
         }
     }
