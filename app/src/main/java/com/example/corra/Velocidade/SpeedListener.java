@@ -2,7 +2,10 @@ package com.example.corra.Velocidade;
 
 import android.location.Location;
 import android.location.LocationListener;
+import android.os.Bundle;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -37,5 +40,20 @@ public class SpeedListener implements LocationListener {
             //Log.d(TAG, "Removendo : " + lastSpeeds.size());
             lastSpeeds.poll();
         }
+    }
+
+    @Override
+    public void onProviderEnabled(@NonNull String provider) {
+        Log.d(TAG, "Provider Enabled");
+    }
+
+    @Override
+    public void onProviderDisabled(@NonNull String provider) {
+        Log.d(TAG, "Provider Disabled");
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        Log.d(TAG, "Status changed");
     }
 }
