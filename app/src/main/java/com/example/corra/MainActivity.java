@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     AlertDialog.Builder builder;
     private static final int PERMISSION_REQUEST_CODE = 99;
+    NavigationBarView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +54,15 @@ public class MainActivity extends AppCompatActivity {
                     99);
         }
 
-        NavigationBarView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        //Obtem navController
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
         final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         final NavController navController = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
-        bottomNavigationView.setOnItemSelectedListener((NavigationBarView.OnItemSelectedListener) item -> {
-            if (item.getItemId() == R.id.homebottomnav) {
+
+        //Controla bottomNav
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            if (item.getItemId() != R.id.corridabottomnav) {
                 navController.navigate(R.id.nav_home);
             } else {
                 navController.navigate(R.id.nav_corrida);
@@ -77,9 +81,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Permissao concedida");
             } else {
                 builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.dialog_message).setTitle(R.string.dialog_title);
+                builder.setMessage(R.string.dialog_message).setTitle(R.string.dialog_title).setNeutralButton(R.string.ok, null);
                 AlertDialog dialog = builder.create();
                 dialog.show();
+                bottomNavigationView.getMenu().getItem(1).setEnabled(false);
             }
         }
     }

@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">Corra</string>
     <string name="descricao_botao_corrida">Botão inicia corrida</string>
-    <string name="dialog_message">O aplicativo necessita desta permissão para funcionar corretamente.</string>
+    <string name="dialog_message">O aplicativo necessita da permissão de localização precisa para funcionar corretamente.</string>
     <string name="dialog_title">Permissão negada.</string>
     <string name="home">Home</string>
     <string name="corrida">Corrida</string>
+    <string name="ok">Ok</string>
 </resources>

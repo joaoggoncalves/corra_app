@@ -10,6 +10,9 @@ import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -21,6 +24,7 @@ import com.example.corra.Database.CorridaViewmodel;
 import com.example.corra.Model.Corrida;
 import com.example.corra.Velocidade.SpeedListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -53,8 +57,8 @@ public class RunFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_run, container, false);
         // Inflate the layout for this fragment
-        btnPause = (FloatingActionButton) rootView.findViewById(R.id.pause_fab);
-        btnStop = (FloatingActionButton) rootView.findViewById(R.id.stop_fab);
+        btnPause = rootView.findViewById(R.id.pause_fab);
+        btnStop = rootView.findViewById(R.id.stop_fab);
         //Botão pausa/despausa
         btnPause.setOnClickListener(v -> {
             if (!rodando && rodandoprimeiravez) {
@@ -93,8 +97,8 @@ public class RunFragment extends Fragment {
             velocidades.clear();
             btnStop.setVisibility(View.INVISIBLE);
             rodandoprimeiravez = true;
-            //Intent i = new Intent(.this, MainActivity.class);
-            //startActivity(i);
+            NavigationBarView navBar = getActivity().findViewById(R.id.bottomNavigationView);
+            navBar.setSelectedItemId(R.id.homebottomnav);
         });
         return rootView;
     }
