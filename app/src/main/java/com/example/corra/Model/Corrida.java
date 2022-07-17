@@ -10,7 +10,7 @@ public class Corrida {
     public int uid;
 
     @ColumnInfo(name = "tempo")
-    public float tempo;
+    public long tempo;
 
     @ColumnInfo(name = "velocidade")
     public double velocidade;
