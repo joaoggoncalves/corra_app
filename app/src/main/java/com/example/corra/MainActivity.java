@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
                 builder.setMessage(R.string.dialog_message).setTitle(R.string.dialog_title).setNeutralButton(R.string.ok, null);
                 AlertDialog dialog = builder.create();
                 dialog.show();
+                //TODO:
+                //Cinzar o botão ou algo parecido
                 bottomNavigationView.getMenu().getItem(1).setEnabled(false);
             }
         }

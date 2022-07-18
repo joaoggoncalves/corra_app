@@ -27,4 +27,8 @@ public class CorridaViewmodel extends AndroidViewModel {
     public void insereCorrida(Corrida corrida) {
         mRepo.insere(corrida);
     }
+
+    public void deleteCorrida(int uid) {
+        mRepo.delete(uid);
+    }
 }

@@ -27,8 +27,10 @@ import com.google.android.material.navigation.NavigationBarView;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Queue;
 
 // Teste cronometro
 import android.widget.Chronometer;
@@ -43,7 +45,7 @@ public class RunFragment extends Fragment {
     private boolean rodandoprimeiravez = true;
     //TODO:
     //Usar queue (?)
-    List<Float> velocidades = new ArrayList<>();
+    Queue<Float> velocidades = new LinkedList<>();
     private static final String TAG = "RunFragment";
     long elapsedMillis;
 
@@ -118,12 +120,14 @@ public class RunFragment extends Fragment {
         return rootView;
     }
 
+
+    //TODO:
+    //Display distância
     private void startSpeed() {
         final Handler handler = new Handler();
         speedtv = getView().findViewById(R.id.speedtv);
         SpeedListener speedListener = new SpeedListener();
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-
         //Thread velocidade
         handler.post(new Runnable() {
             @Override

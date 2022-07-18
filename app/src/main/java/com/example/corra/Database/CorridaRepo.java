@@ -27,4 +27,10 @@ public class CorridaRepo {
             corridaDao.insereCorrida(corrida);
         });
     }
+
+    void delete(int uid) {
+        CorridaDatabase.databaseWriteExecutor.execute(() -> {
+            corridaDao.deleteCorrida(uid);
+        });
+    }
 }

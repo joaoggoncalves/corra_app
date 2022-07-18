@@ -16,9 +16,9 @@ interface CorridaDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insereCorrida(Corrida corrida);
 
-    @Query("SELECT * FROM table_corrida")
+    @Query("SELECT * FROM table_corrida ORDER BY uid ASC")
     LiveData<List<Corrida>> getAll();
 
-    //TODO:
-    //Selects Ordenados por data, tempo e velocidade
+    @Query("DELETE FROM table_corrida WHERE uid = :uid")
+    void deleteCorrida(int uid);
 }
