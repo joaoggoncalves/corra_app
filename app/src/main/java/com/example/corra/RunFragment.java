@@ -1,6 +1,7 @@
 package com.example.corra;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
@@ -89,13 +90,13 @@ public class RunFragment extends Fragment {
             } else {
                 // Pausa o timer
                 pauseChronometer();
-                elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
                 btnPause.setImageResource(android.R.drawable.ic_media_play);
             }
         });
 
         //Botão para/salva
         btnStop.setOnClickListener(v -> {
+            pauseChronometer();
             //Média velocidades armazenadas
             double velFinal = velocidades.stream().mapToDouble(d -> d).average().orElse(0.0);
             //Cria modelo com valores da corrida atual
@@ -124,20 +125,21 @@ public class RunFragment extends Fragment {
     //TODO:
     //Display distância
     private void startSpeed() {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
         final Handler handler = new Handler();
         speedtv = getView().findViewById(R.id.speedtv);
         SpeedListener speedListener = new SpeedListener();
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         //Thread velocidade
         handler.post(new Runnable() {
+            @SuppressLint("MissingPermission")
             @Override
             public void run() {
                 if (rodando) {
                     //Checa permissão de location
-                    if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                            ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        return;
-                    }
                     //Fornece locations para listener
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, speedListener);
 
@@ -166,6 +168,7 @@ public class RunFragment extends Fragment {
     }
     public void pauseChronometer() {
             chronometer.stop();
+            elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
             rodando = false;
     }
