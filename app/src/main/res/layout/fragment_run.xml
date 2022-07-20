@@ -6,17 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".RunFragment">
 
-    <TextView
-        android:id="@+id/timertv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="256dp"
-        android:textSize="34sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
     <Chronometer
         android:id="@+id/chronometer"
@@ -33,23 +22,24 @@
         android:id="@+id/pause_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:clickable="true"
         android:contentDescription="@string/descricao_botao_corrida"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timertv"
+        app:layout_constraintTop_toBottomOf="@+id/speedtv"
         app:srcCompat="@android:drawable/ic_media_play" />
 
     <TextView
         android:id="@+id/speedtv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="256dp"
         android:textSize="34sp"
-        app:layout_constraintBottom_toTopOf="@+id/pause_fab"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timertv" />
+        app:layout_constraintTop_toBottomOf="@+id/chronometer" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/stop_fab"
@@ -62,5 +52,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pause_fab"
         app:srcCompat="@android:drawable/picture_frame" />
+
+    <TextView
+        android:id="@+id/distanciatv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toTopOf="@+id/chronometer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

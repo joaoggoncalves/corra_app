@@ -16,8 +16,6 @@ import android.util.Log;
 import com.google.android.material.navigation.NavigationBarView;
 
 
-//TODO:
-//RecyclerView com corridas aqui ???
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";

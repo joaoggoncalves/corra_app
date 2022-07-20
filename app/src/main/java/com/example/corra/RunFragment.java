@@ -25,27 +25,24 @@ import com.example.corra.Velocidade.SpeedListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Queue;
 
-// Teste cronometro
 import android.widget.Chronometer;
 
 public class RunFragment extends Fragment {
 
     TextView speedtv;
+    TextView distanciatv;
     FloatingActionButton btnPause;
     FloatingActionButton btnStop;
     private int segundos = 0;
     private boolean rodando = false;
     private boolean rodandoprimeiravez = true;
-    //TODO:
-    //Usar queue (?)
     Queue<Float> velocidades = new LinkedList<>();
     private static final String TAG = "RunFragment";
     long elapsedMillis;
@@ -75,8 +72,8 @@ public class RunFragment extends Fragment {
         chronometer.setBase(SystemClock.elapsedRealtime());
 
         btnPause.setOnClickListener(v -> {
-            // Primeira vez que vai rodar o timer
             if(rodandoprimeiravez) {
+                // Primeira vez que vai rodar o timer
                 rodandoprimeiravez = false;
                 btnStop.setVisibility(View.VISIBLE);
                 btnPause.setImageResource(android.R.drawable.ic_media_pause);
@@ -96,7 +93,8 @@ public class RunFragment extends Fragment {
 
         //Botão para/salva
         btnStop.setOnClickListener(v -> {
-            pauseChronometer();
+            if (rodando)
+                pauseChronometer();
             //Média velocidades armazenadas
             double velFinal = velocidades.stream().mapToDouble(d -> d).average().orElse(0.0);
             //Cria modelo com valores da corrida atual
@@ -131,6 +129,7 @@ public class RunFragment extends Fragment {
         }
         final Handler handler = new Handler();
         speedtv = getView().findViewById(R.id.speedtv);
+        distanciatv = getView().findViewById(R.id.distanciatv);
         SpeedListener speedListener = new SpeedListener();
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         //Thread velocidade
@@ -151,6 +150,9 @@ public class RunFragment extends Fragment {
                     //Calibrar
                     if (segundos%10 == 0) {
                         velocidades.add(Float.parseFloat(speedtv.getText().toString()));
+                        long tempodist = Duration.ofMillis(SystemClock.elapsedRealtime() - chronometer.getBase()).getSeconds();
+                        double dist = (velocidades.stream().mapToDouble(d -> d).average().orElse(0.0)) * (tempodist/3600.0);
+                        distanciatv.setText(String.format(Locale.getDefault(), "%.2f", dist));
                     }
                     segundos++;
                 }

@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import com.example.corra.Database.CorridaViewmodel;
 
+//TODO:
+//RecyclerView com corridas aqui
 public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
