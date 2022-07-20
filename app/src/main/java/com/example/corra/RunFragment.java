@@ -149,7 +149,7 @@ public class RunFragment extends Fragment {
                     //TODO:
                     //Calibrar
                     if (segundos%10 == 0) {
-                        velocidades.add(Float.parseFloat(speedtv.getText().toString()));
+                        velocidades.add(Float.parseFloat(speedtv.getText().toString().replace(",", ".")));
                         long tempodist = Duration.ofMillis(SystemClock.elapsedRealtime() - chronometer.getBase()).getSeconds();
                         double dist = (velocidades.stream().mapToDouble(d -> d).average().orElse(0.0)) * (tempodist/3600.0);
                         distanciatv.setText(String.format(Locale.getDefault(), "%.2f", dist));
