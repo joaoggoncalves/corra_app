@@ -99,7 +99,9 @@ public class RunFragment extends Fragment {
             double velFinal = velocidades.stream().mapToDouble(d -> d).average().orElse(0.0);
             //Cria modelo com valores da corrida atual
             Corrida corrida = new Corrida();
-            corrida.tempo = elapsedMillis;
+            //TODO:
+            //Armazenar com precisão, atualmente joga segundos para baixo
+            corrida.tempo = Duration.ofMillis(elapsedMillis).getSeconds();
             corrida.velocidade = velFinal;
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();

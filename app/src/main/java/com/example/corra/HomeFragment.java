@@ -4,19 +4,26 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.corra.Adapter.CorridaRecyclerViewAdapter;
 import com.example.corra.Database.CorridaViewmodel;
+import com.example.corra.Model.Corrida;
 
-//TODO:
-//RecyclerView com corridas aqui
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
+    private RecyclerView mainRV;
+    private ArrayList<Corrida> lista = new ArrayList<>();
 
     public HomeFragment() {
         // Required empty public constructor
@@ -30,13 +37,25 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        mainRV = rootView.findViewById(R.id.recyclerViewMain);
+        CorridaRecyclerViewAdapter adapter = new CorridaRecyclerViewAdapter(this.getContext(), lista);
+        mainRV.setAdapter(adapter);
+        mainRV.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        mainRV.setHasFixedSize(true);
         //Lê do database (viewmodel)
         CorridaViewmodel viewmodel = new ViewModelProvider(this).get(CorridaViewmodel.class);
         viewmodel.getAllCorridas().observe(getViewLifecycleOwner(), corridas -> {
+            Corrida corrida;
             for (int i=0; i<corridas.size(); i++) {
-                Log.d(TAG, "Corrida " + i + ": Tempo: " + corridas.get(i).tempo + " Distancia: " + corridas.get(i).velocidade * (corridas.get(i).tempo/3600));
+                //Log.d(TAG, "Corrida " + i + ": Tempo: " + corridas.get(i).tempo + " Distancia: " + corridas.get(i).velocidade * (corridas.get(i).tempo/3600));
+                corrida = new Corrida(corridas.get(i).getUid(), corridas.get(i).getTempo(), corridas.get(i).getVelocidade(), corridas.get(i).getData());
+                if (!lista.contains(corrida)) {
+                    lista.add(i, corrida);
+                    adapter.notifyItemInserted(i);
+                }
             }
         });
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return rootView;
     }
 }
