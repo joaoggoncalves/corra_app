@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -46,6 +47,8 @@ public class RunFragment extends Fragment {
     Queue<Float> velocidades = new LinkedList<>();
     private static final String TAG = "RunFragment";
     long elapsedMillis;
+    AlertDialog.Builder builder;
+    NavigationBarView navBar;
 
     //Chronometer Variables
     private Chronometer chronometer;
@@ -70,6 +73,8 @@ public class RunFragment extends Fragment {
         chronometer = rootView.findViewById(R.id.chronometer);
         chronometer.setFormat("Time: %s");
         chronometer.setBase(SystemClock.elapsedRealtime());
+
+        navBar = getActivity().findViewById(R.id.bottomNavigationView);
 
         btnPause.setOnClickListener(v -> {
             if(rodandoprimeiravez) {
@@ -99,7 +104,9 @@ public class RunFragment extends Fragment {
             double velFinal = velocidades.stream().mapToDouble(d -> d).average().orElse(0.0);
             //Cria modelo com valores da corrida atual
             Corrida corrida = new Corrida();
-            corrida.tempo = elapsedMillis;
+            //TODO:
+            //Armazenar com precisão, atualmente joga segundos para baixo
+            corrida.tempo = Duration.ofMillis(elapsedMillis).getSeconds();
             corrida.velocidade = velFinal;
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
@@ -113,7 +120,6 @@ public class RunFragment extends Fragment {
             velocidades.clear();
             btnStop.setVisibility(View.INVISIBLE);
             rodandoprimeiravez = true;
-            NavigationBarView navBar = getActivity().findViewById(R.id.bottomNavigationView);
             navBar.setSelectedItemId(R.id.homebottomnav);
         });
         return rootView;
@@ -125,6 +131,7 @@ public class RunFragment extends Fragment {
     private void startSpeed() {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            navBar.setSelectedItemId(R.id.homebottomnav);
             return;
         }
         final Handler handler = new Handler();
@@ -132,6 +139,14 @@ public class RunFragment extends Fragment {
         distanciatv = getView().findViewById(R.id.distanciatv);
         SpeedListener speedListener = new SpeedListener();
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            builder = new AlertDialog.Builder(this.getContext());
+            builder.setMessage(getString(R.string.gpsdialogmessage)).setTitle(getString(R.string.gpsdialogtitle)).setNeutralButton(R.string.ok, null);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            navBar.setSelectedItemId(R.id.homebottomnav);
+            return;
+        }
         //Thread velocidade
         handler.post(new Runnable() {
             @SuppressLint("MissingPermission")

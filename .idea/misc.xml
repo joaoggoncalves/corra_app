@@ -14,6 +14,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_timer.xml" value="0.333786231884058" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.17777777777777778" />
+        <entry key="app/src/main/res/layout/corrida_card.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.333786231884058" />
         <entry key="app/src/main/res/layout/fragment_run.xml" value="0.333786231884058" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.43859649122807015" />
