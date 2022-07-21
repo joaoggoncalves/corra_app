@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,13 +17,13 @@ import com.example.corra.Database.CorridaViewmodel;
 import com.example.corra.Model.Corrida;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
     private RecyclerView mainRV;
     private ArrayList<Corrida> lista = new ArrayList<>();
+    private CorridaRecyclerViewAdapter adapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         mainRV = rootView.findViewById(R.id.recyclerViewMain);
-        CorridaRecyclerViewAdapter adapter = new CorridaRecyclerViewAdapter(this.getContext(), lista);
+        adapter = new CorridaRecyclerViewAdapter(this.getContext(), lista);
         mainRV.setAdapter(adapter);
         mainRV.setLayoutManager(new LinearLayoutManager(this.getContext()));
         mainRV.setHasFixedSize(true);
@@ -57,5 +57,18 @@ public class HomeFragment extends Fragment {
             }
         });
         return rootView;
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        CorridaViewmodel viewmodel = new ViewModelProvider(this).get(CorridaViewmodel.class);
+        int indice = item.getGroupId();
+        int id = lista.get(indice).getUid();
+        if (item.getItemId() == 0) {
+            viewmodel.deleteCorrida(id);
+            lista.remove(indice);
+            adapter.notifyItemRemoved(indice);
+        }
+        return super.onContextItemSelected(item);
     }
 }
