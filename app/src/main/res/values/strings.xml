@@ -7,4 +7,6 @@
     <string name="corrida">Corrida</string>
     <string name="ok">Ok</string>
     <string name="contextmenutitle">Escolha uma ação</string>
+    <string name="gpsdialogmessage">O aplicativo requer que o serviço de GPS esteja ativado</string>
+    <string name="gpsdialogtitle">GPS Desativado</string>
 </resources>
