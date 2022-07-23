@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -14,7 +15,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Handler;
 import android.os.SystemClock;
-import android.util.Log;
+import android.os.VibrationEffect;
+import android.os.VibratorManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +36,8 @@ import java.util.Locale;
 import java.util.Queue;
 
 import android.widget.Chronometer;
+import android.os.Vibrator;
+
 
 public class RunFragment extends Fragment {
 
@@ -57,6 +61,8 @@ public class RunFragment extends Fragment {
     public RunFragment() {
         // Required empty public constructor
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +88,7 @@ public class RunFragment extends Fragment {
                 rodandoprimeiravez = false;
                 btnStop.setVisibility(View.VISIBLE);
                 btnPause.setImageResource(android.R.drawable.ic_media_pause);
+                startNewFeature();
                 startTimer();
                 startSpeed();
             } else if (!rodando) {
@@ -124,6 +131,46 @@ public class RunFragment extends Fragment {
         });
         return rootView;
     }
+    // TESTES JEAN
+    int repeat = 3;
+    int loopMaior = 1;
+    float loopMenor = 0.5f;
+    Boolean nextVibType = true;   // True for big loop, False for small loop
+    Boolean startFeature = true;
+    long[] form = {0, 1000,300, 1000 };
+    int testeTime = 0; // TESTE
+    Vibrator v;
+    private void smallWheel() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            v.vibrate(VibrationEffect.createWaveform(form, -1));
+        }
+        else {
+            v.vibrate(form, -1);
+        }
+        repeat--;
+        nextVibType = false;
+    }
+    private void bigWheel() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            v.vibrate(VibrationEffect.createOneShot(1400, VibrationEffect.DEFAULT_AMPLITUDE));
+        }
+        else {
+            v.vibrate(1400);
+        }
+        nextVibType = true;
+    }
+    private void startNewFeature() {
+        VibratorManager vibManager;
+        if (Build.VERSION.SDK_INT >=31) {
+            vibManager = (VibratorManager)this.getContext().getSystemService(Context.VIBRATOR_MANAGER_SERVICE);
+            v = vibManager.getDefaultVibrator();
+        }
+        else  {
+            v = (Vibrator) this.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+        }
+
+    }
+    // FIM TESTES JEAN
 
 
     //TODO:
@@ -147,6 +194,7 @@ public class RunFragment extends Fragment {
             navBar.setSelectedItemId(R.id.homebottomnav);
             return;
         }
+
         //Thread velocidade
         handler.post(new Runnable() {
             @SuppressLint("MissingPermission")
@@ -170,10 +218,25 @@ public class RunFragment extends Fragment {
                         distanciatv.setText(String.format(Locale.getDefault(), "%.2f", dist));
                     }
                     segundos++;
+                    testeTime++;
+                    handleRepetion();
+                    if (repeat == 0) {
+                        btnPause.callOnClick();
+                    }
                 }
                 handler.postDelayed(this, 1000);
             }
         });
+    }
+    private void handleRepetion() {
+        if(nextVibType && startFeature && testeTime % (loopMaior * 60) == 0) {
+            smallWheel();
+            testeTime = 0;
+        }
+         else if(!nextVibType &&startFeature && testeTime % (loopMenor * 60) == 0) {
+            bigWheel();
+            testeTime = 0;
+        }
     }
 
     private void startTimer() {
