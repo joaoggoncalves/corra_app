@@ -82,6 +82,8 @@ public class RunFragment extends Fragment {
                 rodandoprimeiravez = false;
                 btnStop.setVisibility(View.VISIBLE);
                 btnPause.setImageResource(android.R.drawable.ic_media_pause);
+                navBar.getMenu().getItem(0).setEnabled(false);
+                navBar.getMenu().getItem(1).setEnabled(false);
                 startTimer();
                 startSpeed();
             } else if (!rodando) {
@@ -100,6 +102,8 @@ public class RunFragment extends Fragment {
         btnStop.setOnClickListener(v -> {
             if (rodando)
                 pauseChronometer();
+            navBar.getMenu().getItem(0).setEnabled(true);
+            navBar.getMenu().getItem(1).setEnabled(true);
             //Média velocidades armazenadas
             double velFinal = velocidades.stream().mapToDouble(d -> d).average().orElse(0.0);
             //Cria modelo com valores da corrida atual
