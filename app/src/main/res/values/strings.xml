@@ -24,4 +24,8 @@
     <string name="_5">5</string>
     <string name="tempo_andando_segundos">Tempo andando (segundos):</string>
     <string name="salvar">Salvar</string>
+    <string name="andando" translatable="false">andando</string>
+    <string name="correndo" translatable="false">correndo</string>
+    <string name="reps" translatable="false">reps</string>
+    <string name="intervalado" translatable="false">intervalado</string>
 </resources>

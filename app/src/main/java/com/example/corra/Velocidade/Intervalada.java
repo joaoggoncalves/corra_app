@@ -5,14 +5,14 @@ import android.os.Vibrator;
 
 public class Intervalada {
     private int repeat;
-    private float walkTime = 0.0f;
-    private float runTime = 0.0f;
+    private int walkTime = 0;
+    private int runTime = 0;
     private Boolean nextVibrationType = true;  // true para walkTime VIB, falso para runTime VIB
     private final long[] waveForm = {0, 1000, 300, 1000};
     private final Vibrator v;
     private int holdTime = 0;
 
-    public Intervalada(int repeat, float walkTime, float runTime, Vibrator v) {
+    public Intervalada(int repeat, int walkTime, int runTime, Vibrator v) {
         this.repeat = repeat;
         this.walkTime = walkTime;
         this.runTime = runTime;
@@ -23,10 +23,10 @@ public class Intervalada {
         this.repeat = x;
     }
 
-    private void setWalkTime(float x) {
+    private void setWalkTime(int x) {
         this.walkTime = x;
     }
-    private void setRunTime(float x) {
+    private void setRunTime(int x) {
         this.walkTime = x;
     }
 
@@ -57,14 +57,14 @@ public class Intervalada {
     // Trata a ordem das vibrações
     public void handleRepetition() {
         // Loop externo (andar)
-        if(this.nextVibrationType && this.holdTime % (this.walkTime * 60) == 0) {
+        if(this.nextVibrationType && this.holdTime % (this.walkTime) == 0) {
             runLoop();
             this.holdTime = 0;
         }
         //Loop interno (correr)
         //Sempre que rodar o loop de corrida, acabou um ciclo da repetição
         // Logo, repeat -= 1
-        else if(!this.nextVibrationType  && this.holdTime % (runTime * 60) == 0) {
+        else if(!this.nextVibrationType  && this.holdTime % (runTime) == 0) {
             walkLoop();
             this.holdTime = 0;
             this.repeat -=1;

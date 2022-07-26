@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Build;
@@ -18,6 +19,7 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.os.VibratorManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,9 +56,10 @@ public class RunFragment extends Fragment {
     long elapsedMillis;
     AlertDialog.Builder builder;
     NavigationBarView navBar;
-    Boolean startIntervalda = true;
     Intervalada interObj;
-
+    boolean startIntervalda;
+    Vibrator holdVib;
+    SharedPreferences sharedPref;
 
     //Chronometer Variables
     private Chronometer chronometer;
@@ -80,28 +83,34 @@ public class RunFragment extends Fragment {
         btnSettings = rootView.findViewById(R.id.settings_fab);
 
         chronometer = rootView.findViewById(R.id.chronometer);
-        //chronometer.setFormat("%s");
         chronometer.setBase(SystemClock.elapsedRealtime());
-        Vibrator holdVib = null;
 
         navBar = getActivity().findViewById(R.id.bottomNavigationView);
-        if(startIntervalda) {
-            holdVib = initializeVibType();
-        }
-        Vibrator finalHoldVib = holdVib;
 
         btnPause.setOnClickListener(v -> {
             if(rodandoprimeiravez) {
-                // Primeira vez que vai rodar o timer
+                //Intervalado
+                sharedPref = getActivity().getSharedPreferences("settings", Context.MODE_PRIVATE);
+                if (sharedPref != null) {
+                    startIntervalda = sharedPref.getBoolean(getString(R.string.intervalado), false);
+                    int walkTime;
+                    int runTime;
+                    int reps;
+                    if (startIntervalda) {
+                        holdVib = initializeVibType();
+                        runTime = sharedPref.getInt(getString(R.string.correndo), 0);
+                        walkTime = sharedPref.getInt(getString(R.string.andando), 0);
+                        reps = sharedPref.getInt(getString(R.string.reps), 0);
+                        interObj = new Intervalada(reps, walkTime, runTime, holdVib);
+                    }
+                }
+                //Primeira vez que vai rodar o timer
                 rodandoprimeiravez = false;
                 btnStop.setVisibility(View.VISIBLE);
                 btnPause.setImageResource(android.R.drawable.ic_media_pause);
                 //Trava nav bar
                 navBar.getMenu().getItem(0).setEnabled(false);
                 navBar.getMenu().getItem(1).setEnabled(false);
-                if(startIntervalda) {
-                    interObj = new Intervalada(2, 0.5f, 0.5f, finalHoldVib);
-                }
                 startTimer();
                 startSpeed();
             } else if (!rodando) {
@@ -146,6 +155,14 @@ public class RunFragment extends Fragment {
             velocidades.clear();
             btnStop.setVisibility(View.INVISIBLE);
             rodandoprimeiravez = true;
+            if (sharedPref != null) {
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt(getString(R.string.andando), 0);
+                editor.putInt(getString(R.string.correndo), 0);
+                editor.putInt(getString(R.string.reps), 0);
+                editor.putBoolean(getString(R.string.intervalado), false);
+                editor.apply();
+            }
             navBar.setSelectedItemId(R.id.homebottomnav);
         });
         return rootView;
@@ -202,10 +219,11 @@ public class RunFragment extends Fragment {
                     }
                     segundos++;
                     if(startIntervalda) {
+                        Log.d(TAG, "startintervalada = " + startIntervalda);
                         interObj.addHoldTime();
                         interObj.handleRepetition();
                         if(interObj.getRepeat() == 0) {
-                            btnPause.callOnClick();
+                            startIntervalda = false;
                         }
                     }
                 }
