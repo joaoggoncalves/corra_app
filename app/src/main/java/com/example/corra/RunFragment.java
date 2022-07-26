@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -14,7 +15,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Handler;
 import android.os.SystemClock;
-import android.util.Log;
+import android.os.Vibrator;
+import android.os.VibratorManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 
 import com.example.corra.Database.CorridaViewmodel;
 import com.example.corra.Model.Corrida;
+import com.example.corra.Velocidade.Intervalada;
 import com.example.corra.Velocidade.SpeedListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
@@ -49,6 +52,9 @@ public class RunFragment extends Fragment {
     long elapsedMillis;
     AlertDialog.Builder builder;
     NavigationBarView navBar;
+    Boolean startIntervalda = true;
+    Intervalada interObj;
+
 
     //Chronometer Variables
     private Chronometer chronometer;
@@ -73,8 +79,13 @@ public class RunFragment extends Fragment {
         chronometer = rootView.findViewById(R.id.chronometer);
         chronometer.setFormat("Time: %s");
         chronometer.setBase(SystemClock.elapsedRealtime());
+        Vibrator holdVib = null;
 
         navBar = getActivity().findViewById(R.id.bottomNavigationView);
+        if(startIntervalda) {
+            holdVib = initializeVibType();
+        }
+        Vibrator finalHoldVib = holdVib;
 
         btnPause.setOnClickListener(v -> {
             if(rodandoprimeiravez) {
@@ -84,6 +95,9 @@ public class RunFragment extends Fragment {
                 btnPause.setImageResource(android.R.drawable.ic_media_pause);
                 navBar.getMenu().getItem(0).setEnabled(false);
                 navBar.getMenu().getItem(1).setEnabled(false);
+                if(startIntervalda) {
+                    interObj = new Intervalada(2, 0.5f, 0.4f, finalHoldVib);
+                }
                 startTimer();
                 startSpeed();
             } else if (!rodando) {
@@ -128,8 +142,17 @@ public class RunFragment extends Fragment {
         });
         return rootView;
     }
-
-
+    // Inicializa o vibrador de forma correta
+    private Vibrator initializeVibType() {
+        Vibrator holdVib;
+        if (Build.VERSION.SDK_INT >=31) {
+            holdVib = ((VibratorManager) this.getContext().getSystemService(Context.VIBRATOR_MANAGER_SERVICE)).getDefaultVibrator();
+        }
+        else  {
+            holdVib = (Vibrator) this.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+        }
+        return holdVib;
+    }
     //TODO:
     //Display distância
     private void startSpeed() {
@@ -174,6 +197,13 @@ public class RunFragment extends Fragment {
                         distanciatv.setText(String.format(Locale.getDefault(), "%.2f", dist));
                     }
                     segundos++;
+                    if(startIntervalda) {
+                        interObj.addHoldTime();
+                        interObj.handleRepetition();
+                        if(interObj.getRepeat() == 0) {
+                            btnPause.callOnClick();
+                        }
+                    }
                 }
                 handler.postDelayed(this, 1000);
             }
