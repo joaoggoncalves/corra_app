@@ -89,7 +89,7 @@ public class RunFragment extends Fragment {
 
         btnPause.setOnClickListener(v -> {
             if(rodandoprimeiravez) {
-                //Intervalado
+                //Intervalado Shared Preferences
                 sharedPref = getActivity().getSharedPreferences("settings", Context.MODE_PRIVATE);
                 if (sharedPref != null) {
                     startIntervalda = sharedPref.getBoolean(getString(R.string.intervalado), false);

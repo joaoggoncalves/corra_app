@@ -38,6 +38,8 @@ public class SettingsActivity extends AppCompatActivity {
         repeticoesEdit = findViewById(R.id.repeticoesInput);
         intervalCb = findViewById(R.id.intervalcb);
         btnSave = findViewById(R.id.btn_savesettings);
+
+        //Muda visibility dos EditText baseado no checkbox
         intervalCb.setOnClickListener(v -> {
             if (intervalCb.isChecked()) {
                 tempoandando.setVisibility(View.VISIBLE);
@@ -55,11 +57,14 @@ public class SettingsActivity extends AppCompatActivity {
                 repeticoesEdit.setVisibility(View.INVISIBLE);
             }
         });
+        //Listener para botão de salvar preferências
         btnSave.setOnClickListener(v -> {
+            //Editor shared preferences
             SharedPreferences sharedPref = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             if (intervalCb.isChecked()) {
                 if (checkValues(andandoEdit, false) && checkValues(correndoEdit, false) && checkValues(repeticoesEdit, true)) {
+                    //Caso valores sejam válidos armazenar no arquivo.
                     editor.putInt(getString(R.string.andando), Integer.parseInt(andandoEdit.getText().toString().trim()));
                     editor.putInt(getString(R.string.correndo), Integer.parseInt(correndoEdit.getText().toString().trim()));
                     editor.putInt(getString(R.string.reps), Integer.parseInt(repeticoesEdit.getText().toString().trim()));
@@ -81,6 +86,12 @@ public class SettingsActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Tests an EditText for null values and valid values.
+     * @param field to be tested
+     * @param zero can the EditText value be 0?
+     * @return true if values are valid and non-null.
+     */
     private boolean checkValues(EditText field, boolean zero) {
         int val;
         if (field.getText().toString().trim().length() == 0) {
