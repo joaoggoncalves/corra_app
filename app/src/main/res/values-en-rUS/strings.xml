@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="descricao_botao_corrida">Button Starts a Run</string>
+    <string name="dialog_message">The application requires the fine location permission.</string>
+    <string name="dialog_title">Permission denied.</string>
+    <string name="home">Home</string>
+    <string name="corrida">Run</string>
+    <string name="ok">Ok</string>
+    <string name="contextmenutitle">Pick an action</string>
+    <string name="gpsdialogmessage">The application requires location services to be enabled.</string>
+    <string name="gpsdialogtitle">GPS Disabled</string>
+    <string name="tempo">Time</string>
+    <string name="dist">Distance</string>
+    <string name="pace">Pace</string>
+    <string name="descricao_botao_stop">Button Finishes Current Run</string>
+    <string name="btnsettings">Button that redirects to the run settings</string>
+    <string name="habilitar_treino_intervalado">Habilitar treino intervalado</string>
+    <string name="tempo_correndo_segundos">Tempo correndo (segundos)</string>
+    <string name="_30">30</string>
+    <string name="repeti_es_0_indeterminado">Repetições (0 indeterminado)</string>
+    <string name="_0">0</string>
+    <string name="dist_ncia_meta_km_ou_em_branco">Distância Meta (Km ou em branco)</string>
+    <string name="_5">5</string>
+    <string name="tempo_andando_segundos">Tempo andando (segundos):</string>
+    <string name="salvar">Salvar</string>
+</resources>

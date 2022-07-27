@@ -63,7 +63,6 @@ public class CorridaRecyclerViewAdapter extends RecyclerView.Adapter<CorridaRecy
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
             if (menu != null) {
-                menu.setHeaderTitle(R.string.contextmenutitle);
                 if (v != null) {
                     menu.add(this.getAdapterPosition(), 0, 0, "Remover Corrida");
                 }

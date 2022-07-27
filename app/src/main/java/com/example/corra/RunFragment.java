@@ -3,8 +3,11 @@ package com.example.corra;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -14,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Handler;
 import android.os.SystemClock;
+import android.os.Vibrator;
+import android.os.VibratorManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +27,7 @@ import android.widget.TextView;
 
 import com.example.corra.Database.CorridaViewmodel;
 import com.example.corra.Model.Corrida;
+import com.example.corra.Velocidade.Intervalada;
 import com.example.corra.Velocidade.SpeedListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
@@ -41,6 +47,7 @@ public class RunFragment extends Fragment {
     TextView distanciatv;
     FloatingActionButton btnPause;
     FloatingActionButton btnStop;
+    FloatingActionButton btnSettings;
     private int segundos = 0;
     private boolean rodando = false;
     private boolean rodandoprimeiravez = true;
@@ -49,6 +56,10 @@ public class RunFragment extends Fragment {
     long elapsedMillis;
     AlertDialog.Builder builder;
     NavigationBarView navBar;
+    Intervalada interObj;
+    boolean startIntervalda;
+    Vibrator holdVib;
+    SharedPreferences sharedPref;
 
     //Chronometer Variables
     private Chronometer chronometer;
@@ -69,19 +80,35 @@ public class RunFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_run, container, false);
         btnPause = rootView.findViewById(R.id.pause_fab);
         btnStop = rootView.findViewById(R.id.stop_fab);
+        btnSettings = rootView.findViewById(R.id.settings_fab);
 
         chronometer = rootView.findViewById(R.id.chronometer);
-        chronometer.setFormat("Time: %s");
         chronometer.setBase(SystemClock.elapsedRealtime());
 
         navBar = getActivity().findViewById(R.id.bottomNavigationView);
 
         btnPause.setOnClickListener(v -> {
             if(rodandoprimeiravez) {
-                // Primeira vez que vai rodar o timer
+                //Intervalado Shared Preferences
+                sharedPref = getActivity().getSharedPreferences("settings", Context.MODE_PRIVATE);
+                if (sharedPref != null) {
+                    startIntervalda = sharedPref.getBoolean(getString(R.string.intervalado), false);
+                    int walkTime;
+                    int runTime;
+                    int reps;
+                    if (startIntervalda) {
+                        holdVib = initializeVibType();
+                        runTime = sharedPref.getInt(getString(R.string.correndo), 0);
+                        walkTime = sharedPref.getInt(getString(R.string.andando), 0);
+                        reps = sharedPref.getInt(getString(R.string.reps), 0);
+                        interObj = new Intervalada(reps, walkTime, runTime, holdVib);
+                    }
+                }
+                //Primeira vez que vai rodar o timer
                 rodandoprimeiravez = false;
                 btnStop.setVisibility(View.VISIBLE);
                 btnPause.setImageResource(android.R.drawable.ic_media_pause);
+                //Trava nav bar
                 navBar.getMenu().getItem(0).setEnabled(false);
                 navBar.getMenu().getItem(1).setEnabled(false);
                 startTimer();
@@ -98,18 +125,22 @@ public class RunFragment extends Fragment {
             }
         });
 
+        btnSettings.setOnClickListener(v -> {
+            Intent settingsIntent = new Intent(this.getContext(), SettingsActivity.class);
+            startActivity(settingsIntent);
+        });
+
         //Botão para/salva
         btnStop.setOnClickListener(v -> {
             if (rodando)
                 pauseChronometer();
+            //Destrava nav bar
             navBar.getMenu().getItem(0).setEnabled(true);
             navBar.getMenu().getItem(1).setEnabled(true);
             //Média velocidades armazenadas
             double velFinal = velocidades.stream().mapToDouble(d -> d).average().orElse(0.0);
             //Cria modelo com valores da corrida atual
             Corrida corrida = new Corrida();
-            //TODO:
-            //Armazenar com precisão, atualmente joga segundos para baixo
             corrida.tempo = Duration.ofMillis(elapsedMillis).getSeconds();
             corrida.velocidade = velFinal;
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
@@ -124,14 +155,30 @@ public class RunFragment extends Fragment {
             velocidades.clear();
             btnStop.setVisibility(View.INVISIBLE);
             rodandoprimeiravez = true;
+            if (sharedPref != null) {
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putInt(getString(R.string.andando), 0);
+                editor.putInt(getString(R.string.correndo), 0);
+                editor.putInt(getString(R.string.reps), 0);
+                editor.putBoolean(getString(R.string.intervalado), false);
+                editor.apply();
+            }
             navBar.setSelectedItemId(R.id.homebottomnav);
         });
         return rootView;
     }
+    // Inicializa o vibrador de forma correta
+    private Vibrator initializeVibType() {
+        Vibrator holdVib;
+        if (Build.VERSION.SDK_INT >=31) {
+            holdVib = ((VibratorManager) this.getContext().getSystemService(Context.VIBRATOR_MANAGER_SERVICE)).getDefaultVibrator();
+        }
+        else  {
+            holdVib = (Vibrator) this.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+        }
+        return holdVib;
+    }
 
-
-    //TODO:
-    //Display distância
     private void startSpeed() {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -157,7 +204,6 @@ public class RunFragment extends Fragment {
             @Override
             public void run() {
                 if (rodando) {
-                    //Checa permissão de location
                     //Fornece locations para listener
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, speedListener);
 
@@ -165,8 +211,6 @@ public class RunFragment extends Fragment {
                     String vel = String.format(Locale.getDefault(), "%.2f", speedListener.avg);
                     speedtv.setText(vel);
                     //Armazena velocidades a cada 10 segundos (idealmente)
-                    //TODO:
-                    //Calibrar
                     if (segundos%10 == 0) {
                         velocidades.add(Float.parseFloat(speedtv.getText().toString().replace(",", ".")));
                         long tempodist = Duration.ofMillis(SystemClock.elapsedRealtime() - chronometer.getBase()).getSeconds();
@@ -174,6 +218,14 @@ public class RunFragment extends Fragment {
                         distanciatv.setText(String.format(Locale.getDefault(), "%.2f", dist));
                     }
                     segundos++;
+                    if(startIntervalda) {
+                        Log.d(TAG, "startintervalada = " + startIntervalda);
+                        interObj.addHoldTime();
+                        interObj.handleRepetition();
+                        if(interObj.getRepeat() == 0) {
+                            startIntervalda = false;
+                        }
+                    }
                 }
                 handler.postDelayed(this, 1000);
             }

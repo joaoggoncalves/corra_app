@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity">
+
+    <CheckBox
+        android:id="@+id/intervalcb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:buttonTint="@color/azul_secundario"
+        android:checked="false"
+        android:text="@string/habilitar_treino_intervalado"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/tempoAndandoInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/_30"
+        android:inputType="number"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/tempoandandostring"
+        app:layout_constraintTop_toBottomOf="@+id/tempoandandostring"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/tempoandandostring"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/tempo_andando_segundos"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intervalcb" />
+
+    <TextView
+        android:id="@+id/tempocorrendostring"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/tempo_correndo_segundos"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/tempoandandostring"
+        app:layout_constraintTop_toBottomOf="@+id/tempoAndandoInput" />
+
+    <EditText
+        android:id="@+id/tempoCorrendoInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/_30"
+        android:inputType="number"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/tempocorrendostring"
+        app:layout_constraintTop_toBottomOf="@+id/tempocorrendostring"
+        android:importantForAutofill="no" />
+
+    <TextView
+        android:id="@+id/repeticoesstring"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/repeti_es_0_indeterminado"
+        android:textColor="@color/design_default_color_on_secondary"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/tempocorrendostring"
+        app:layout_constraintTop_toBottomOf="@+id/tempoCorrendoInput" />
+
+    <EditText
+        android:id="@+id/repeticoesInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/_0"
+        android:inputType="number"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/repeticoesstring"
+        app:layout_constraintTop_toBottomOf="@+id/repeticoesstring"
+        android:importantForAutofill="no" />
+
+    <View
+        android:id="@+id/barra"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/azul_main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/repeticoesInput" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/dist_ncia_meta_km_ou_em_branco"
+        android:textColor="@color/design_default_color_on_secondary"
+        app:layout_constraintStart_toStartOf="@+id/repeticoesInput"
+        app:layout_constraintTop_toBottomOf="@+id/barra" />
+
+    <EditText
+        android:id="@+id/editTextNumberDecimal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/_5"
+        android:inputType="numberDecimal"
+        android:minHeight="48dp"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        android:importantForAutofill="no" />
+
+    <Button
+        android:id="@+id/btn_savesettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/salvar"
+        android:textColor="#4A148C"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNumberDecimal" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

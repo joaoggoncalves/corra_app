@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Corra</string>
+    <string name="app_name" translatable="false">Corra</string>
     <string name="descricao_botao_corrida">Botão inicia corrida</string>
     <string name="dialog_message">O aplicativo necessita da permissão de localização precisa para funcionar corretamente.</string>
     <string name="dialog_title">Permissão negada.</string>
@@ -9,4 +9,23 @@
     <string name="contextmenutitle">Escolha uma ação</string>
     <string name="gpsdialogmessage">O aplicativo requer que o serviço de GPS esteja ativado</string>
     <string name="gpsdialogtitle">GPS Desativado</string>
+    <string name="tempo">Tempo</string>
+    <string name="dist">Distância</string>
+    <string name="pace">Pace</string>
+    <string name="descricao_botao_stop">Botão encerra corrida</string>
+    <string name="zero" translatable="false">0:00</string>
+    <string name="btnsettings">Botão leva para tela de configurações de corrida</string>
+    <string name="habilitar_treino_intervalado">Habilitar treino intervalado</string>
+    <string name="tempo_correndo_segundos">Tempo correndo (segundos)</string>
+    <string name="_30">30</string>
+    <string name="repeti_es_0_indeterminado">Repetições (0 indeterminado)</string>
+    <string name="_0">0</string>
+    <string name="dist_ncia_meta_km_ou_em_branco">Distância Meta (Km ou em branco)</string>
+    <string name="_5">5</string>
+    <string name="tempo_andando_segundos">Tempo andando (segundos):</string>
+    <string name="salvar">Salvar</string>
+    <string name="andando" translatable="false">andando</string>
+    <string name="correndo" translatable="false">correndo</string>
+    <string name="reps" translatable="false">reps</string>
+    <string name="intervalado" translatable="false">intervalado</string>
 </resources>
