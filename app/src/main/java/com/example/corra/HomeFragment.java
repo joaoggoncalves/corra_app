@@ -2,11 +2,14 @@ package com.example.corra;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +46,8 @@ public class HomeFragment extends Fragment {
         mainRV.setAdapter(adapter);
         mainRV.setLayoutManager(new LinearLayoutManager(this.getContext()));
         mainRV.setHasFixedSize(true);
+        ActionBar barra = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        barra.setTitle(R.string.actionbartitlehome);
         //Lê do database (viewmodel)
         CorridaViewmodel viewmodel = new ViewModelProvider(this).get(CorridaViewmodel.class);
         viewmodel.getAllCorridas().observe(getViewLifecycleOwner(), corridas -> {

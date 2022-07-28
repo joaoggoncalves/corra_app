@@ -10,7 +10,9 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,7 +21,6 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.os.Vibrator;
 import android.os.VibratorManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class RunFragment extends Fragment {
 
     TextView speedtv;
     TextView distanciatv;
+    TextView intervalotv;
     FloatingActionButton btnPause;
     FloatingActionButton btnStop;
     FloatingActionButton btnSettings;
@@ -81,11 +83,14 @@ public class RunFragment extends Fragment {
         btnPause = rootView.findViewById(R.id.pause_fab);
         btnStop = rootView.findViewById(R.id.stop_fab);
         btnSettings = rootView.findViewById(R.id.settings_fab);
+        intervalotv = rootView.findViewById(R.id.intervalotv);
 
         chronometer = rootView.findViewById(R.id.chronometer);
         chronometer.setBase(SystemClock.elapsedRealtime());
 
         navBar = getActivity().findViewById(R.id.bottomNavigationView);
+        ActionBar barra = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        barra.setTitle(R.string.actionbartitlecorrida);
 
         btnPause.setOnClickListener(v -> {
             if(rodandoprimeiravez) {
@@ -97,6 +102,7 @@ public class RunFragment extends Fragment {
                     int runTime;
                     int reps;
                     if (startIntervalda) {
+                        intervalotv.setText(R.string.walkinterval);
                         holdVib = initializeVibType();
                         runTime = sharedPref.getInt(getString(R.string.correndo), 0);
                         walkTime = sharedPref.getInt(getString(R.string.andando), 0);
@@ -111,6 +117,7 @@ public class RunFragment extends Fragment {
                 //Trava nav bar
                 navBar.getMenu().getItem(0).setEnabled(false);
                 navBar.getMenu().getItem(1).setEnabled(false);
+                btnSettings.setEnabled(false);
                 startTimer();
                 startSpeed();
             } else if (!rodando) {
@@ -137,11 +144,12 @@ public class RunFragment extends Fragment {
             //Destrava nav bar
             navBar.getMenu().getItem(0).setEnabled(true);
             navBar.getMenu().getItem(1).setEnabled(true);
+            btnSettings.setEnabled(true);
             //Média velocidades armazenadas
             double velFinal = velocidades.stream().mapToDouble(d -> d).average().orElse(0.0);
             //Cria modelo com valores da corrida atual
             Corrida corrida = new Corrida();
-            corrida.tempo = Duration.ofMillis(elapsedMillis).getSeconds();
+            corrida.tempo = elapsedMillis;
             corrida.velocidade = velFinal;
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
@@ -167,6 +175,7 @@ public class RunFragment extends Fragment {
         });
         return rootView;
     }
+
     // Inicializa o vibrador de forma correta
     private Vibrator initializeVibType() {
         Vibrator holdVib;
@@ -211,7 +220,7 @@ public class RunFragment extends Fragment {
                     String vel = String.format(Locale.getDefault(), "%.2f", speedListener.avg);
                     speedtv.setText(vel);
                     //Armazena velocidades a cada 10 segundos (idealmente)
-                    if (segundos%10 == 0) {
+                    if (segundos%5 == 0) {
                         velocidades.add(Float.parseFloat(speedtv.getText().toString().replace(",", ".")));
                         long tempodist = Duration.ofMillis(SystemClock.elapsedRealtime() - chronometer.getBase()).getSeconds();
                         double dist = (velocidades.stream().mapToDouble(d -> d).average().orElse(0.0)) * (tempodist/3600.0);
@@ -219,12 +228,18 @@ public class RunFragment extends Fragment {
                     }
                     segundos++;
                     if(startIntervalda) {
-                        Log.d(TAG, "startintervalada = " + startIntervalda);
                         interObj.addHoldTime();
                         interObj.handleRepetition();
                         if(interObj.getRepeat() == 0) {
                             startIntervalda = false;
                         }
+                        if (interObj.getLoop()) {
+                            intervalotv.setText(R.string.walkinterval);
+                        } else {
+                            intervalotv.setText(R.string.runninginterval);
+                        }
+                    } else {
+                        intervalotv.setText(R.string.intervaldisabled);
                     }
                 }
                 handler.postDelayed(this, 1000);

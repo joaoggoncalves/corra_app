@@ -30,6 +30,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         barra = getSupportActionBar();
         barra.setDisplayHomeAsUpEnabled(true);
+        barra.setTitle(R.string.actionbartitlesettings);
         tempoandando = findViewById(R.id.tempoandandostring);
         tempocorrendo = findViewById(R.id.tempocorrendostring);
         repeticoes = findViewById(R.id.repeticoesstring);

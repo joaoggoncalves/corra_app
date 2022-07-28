@@ -53,6 +53,9 @@ public class Intervalada {
     public int getRepeat() {
         return this.repeat;
     }
+    public boolean getLoop() {
+        return this.nextVibrationType;
+    }
 
     // Trata a ordem das vibrações
     public void handleRepetition() {

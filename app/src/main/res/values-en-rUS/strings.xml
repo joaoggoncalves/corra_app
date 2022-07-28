@@ -23,4 +23,15 @@
     <string name="_5">5</string>
     <string name="tempo_andando_segundos">Tempo andando (segundos):</string>
     <string name="salvar">Salvar</string>
+    <string name="walkinterval">Interval: Walking</string>
+    <string name="runninginterval">Interval: Running</string>
+    <string name="intervaldisabled">Intervals disabled</string>
+    <string name="intervalos">Intervals</string>
+    <string name="actionbartitlesettings">Interval Settings</string>
+    <string name="actionbartitlecorrida">Run</string>
+    <string name="actionbartitlehome">Your Runs</string>
+    <string name="horariocard">Start Time:</string>
+    <string name="tempocard">Duration:</string>
+    <string name="distcard">Distance:</string>
+    <string name="datacard">Data:</string>
 </resources>

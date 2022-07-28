@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:textColor="@color/black"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="@+id/tempostring"
         app:layout_constraintStart_toStartOf="@+id/tempostring"
@@ -21,7 +22,7 @@
         android:id="@+id/pause_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="32dp"
         android:backgroundTint="@color/azul_secundario"
         android:clickable="true"
         android:contentDescription="@string/descricao_botao_corrida"
@@ -37,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/zero"
-        android:textColor="@color/material_dynamic_primary0"
+        android:textColor="@color/black"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,15 +48,15 @@
         android:id="@+id/stop_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="96dp"
+        android:layout_marginBottom="32dp"
         android:backgroundTint="@color/azul_secundario"
         android:clickable="true"
+        android:contentDescription="@string/descricao_botao_stop"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/settings_fab"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@android:drawable/picture_frame"
-        android:contentDescription="@string/descricao_botao_stop" />
+        app:srcCompat="@android:drawable/picture_frame" />
 
     <TextView
         android:id="@+id/distanciatv"
@@ -63,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/zero"
-        android:textColor="@color/material_dynamic_primary0"
+        android:textColor="@color/black"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="@+id/distanciastring"
         app:layout_constraintStart_toStartOf="@+id/distanciastring"
@@ -127,12 +128,25 @@
         android:id="@+id/settings_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="72dp"
         android:clickable="true"
         android:contentDescription="@string/btnsettings"
         android:src="@drawable/ic_action_settings"
-        app:layout_constraintBottom_toTopOf="@+id/stop_fab"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pause_fab" />
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/intervalotv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/intervalos"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/barra2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barra" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

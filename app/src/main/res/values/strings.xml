@@ -28,4 +28,15 @@
     <string name="correndo" translatable="false">correndo</string>
     <string name="reps" translatable="false">reps</string>
     <string name="intervalado" translatable="false">intervalado</string>
+    <string name="walkinterval">Intervalo: Andando</string>
+    <string name="runninginterval">Intervalo: Correndo</string>
+    <string name="intervaldisabled">Intervalos desabilitados</string>
+    <string name="intervalos">Intervalos</string>
+    <string name="actionbartitlesettings">Configurações de Intervalo</string>
+    <string name="actionbartitlecorrida">Corrida</string>
+    <string name="actionbartitlehome">Suas Corridas</string>
+    <string name="horariocard">Horário:</string>
+    <string name="tempocard">Tempo:</string>
+    <string name="distcard">Distância:</string>
+    <string name="datacard">Data:</string>
 </resources>

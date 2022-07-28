@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="4dp"
     app:cardCornerRadius="12dp">
 
@@ -15,29 +15,83 @@
             android:id="@+id/distanciacorrida"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/datacorrida"
-            android:layout_alignStart="@+id/datacorrida"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/diststring"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/diststring"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_marginStart="0dp"
-            android:layout_marginTop="16dp"
-            android:text="Dist"
+            android:text="@string/distcard"
+            android:textColor="@color/black"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/datacorrida"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="data"
+            android:layout_alignTop="@+id/distanciacorrida"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="30dp"
             android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tempocorrida"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/distanciacorrida"
-            android:layout_alignStart="@+id/distanciacorrida"
+            android:layout_alignTop="@+id/timestr"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_toEndOf="@+id/timestr"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/timestr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/diststring"
+            android:layout_alignStart="@+id/diststring"
             android:layout_marginStart="0dp"
-            android:layout_marginTop="16dp"
-            android:text="tempo" />
+            android:layout_marginTop="30dp"
+            android:text="@string/tempocard"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/datastring"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:layout_toStartOf="@+id/datacorrida"
+            android:text="@string/datacard"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/horastring"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/datastring"
+            android:layout_alignTop="@+id/tempocorrida"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:text="@string/horariocard"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/horacorrida"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/horastring"
+            android:layout_alignEnd="@+id/datacorrida"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:textSize="16sp" />
 
     </RelativeLayout>
 
