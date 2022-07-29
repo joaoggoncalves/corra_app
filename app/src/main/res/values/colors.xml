@@ -12,4 +12,5 @@
     <color name="amarelo_main">#FFFF66</color>
     <color name="amarelo_secundario">#EDED47</color>
     <color name="cinza">#6D6D6D</color>
+    <color name="cinzabg">#FCFCFF</color>
 </resources>
