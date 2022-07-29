@@ -22,7 +22,6 @@ public class Intervalada {
     private void setRepeat(int x) {
         this.repeat = x;
     }
-
     private void setWalkTime(int x) {
         this.walkTime = x;
     }
