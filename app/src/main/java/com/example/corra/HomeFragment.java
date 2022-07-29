@@ -1,5 +1,6 @@
 package com.example.corra;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.ActionBar;
@@ -9,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,9 +21,10 @@ import com.example.corra.Model.Corrida;
 
 import java.util.ArrayList;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements CorridaRecyclerViewAdapter.onItemClickListener {
 
     private static final String TAG = "HomeFragment";
+    private static final String EXTRA_ID = "id";
     private RecyclerView mainRV;
     private ArrayList<Corrida> lista = new ArrayList<>();
     private CorridaRecyclerViewAdapter adapter;
@@ -43,6 +44,7 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         mainRV = rootView.findViewById(R.id.recyclerViewMain);
         adapter = new CorridaRecyclerViewAdapter(this.getContext(), lista);
+        adapter.setOnItemClickListener(this);
         mainRV.setAdapter(adapter);
         mainRV.setLayoutManager(new LinearLayoutManager(this.getContext()));
         mainRV.setHasFixedSize(true);
@@ -75,5 +77,14 @@ public class HomeFragment extends Fragment {
             adapter.notifyItemRemoved(indice);
         }
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent infoIntent = new Intent(this.getContext(), DetailsActivity.class);
+        Corrida itemClicado = lista.get(position);
+        infoIntent.putExtra(EXTRA_ID, itemClicado.getUid());
+
+        startActivity(infoIntent);
     }
 }

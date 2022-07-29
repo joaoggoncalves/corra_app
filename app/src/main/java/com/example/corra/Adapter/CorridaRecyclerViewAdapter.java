@@ -26,6 +26,15 @@ public class CorridaRecyclerViewAdapter extends RecyclerView.Adapter<CorridaRecy
 
     private List<Corrida> mList;
     private LayoutInflater mInflater;
+    private onItemClickListener mListener;
+
+    public interface onItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(onItemClickListener listener) {
+        mListener = listener;
+    }
 
     public CorridaRecyclerViewAdapter(Context context, List<Corrida> data) {
         this.mInflater = LayoutInflater.from(context);
@@ -88,6 +97,14 @@ public class CorridaRecyclerViewAdapter extends RecyclerView.Adapter<CorridaRecy
             tempoTv = itemView.findViewById(R.id.tempocorrida);
             horaTv = itemView.findViewById(R.id.horacorrida);
             itemView.setOnCreateContextMenuListener(this);
+            itemView.setOnClickListener(v -> {
+                if(mListener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        mListener.onItemClick(position);
+                    }
+                }
+            });
         }
 
         @Override

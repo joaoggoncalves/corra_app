@@ -10,6 +10,8 @@ import com.example.corra.Model.Corrida;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
 @Dao
 interface CorridaDAO {
 
@@ -21,4 +23,7 @@ interface CorridaDAO {
 
     @Query("DELETE FROM table_corrida WHERE uid = :uid")
     void deleteCorrida(int uid);
+
+    @Query("SELECT * FROM table_corrida WHERE uid = :uid")
+    LiveData<Corrida> getCorridaById(int uid);
 }

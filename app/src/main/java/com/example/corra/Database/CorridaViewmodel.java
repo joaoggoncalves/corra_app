@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.corra.Database.CorridaRepo;
 import com.example.corra.Model.Corrida;
 
 import java.util.List;
@@ -30,5 +29,9 @@ public class CorridaViewmodel extends AndroidViewModel {
 
     public void deleteCorrida(int uid) {
         mRepo.delete(uid);
+    }
+
+    public LiveData<Corrida> selectCorrida(int uid) {
+        return mRepo.selectById(uid);
     }
 }

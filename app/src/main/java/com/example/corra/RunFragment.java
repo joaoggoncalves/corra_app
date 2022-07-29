@@ -258,10 +258,23 @@ public class RunFragment extends Fragment {
             rodando = true;
         }
     }
-    public void pauseChronometer() {
+    private void pauseChronometer() {
             chronometer.stop();
             elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
             pauseOffset = SystemClock.elapsedRealtime() - chronometer.getBase();
             rodando = false;
+    }
+
+    @Override
+    public void onDestroy() {
+        if (sharedPref != null) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putInt(getString(R.string.andando), 0);
+            editor.putInt(getString(R.string.correndo), 0);
+            editor.putInt(getString(R.string.reps), 0);
+            editor.putBoolean(getString(R.string.intervalado), false);
+            editor.apply();
+        }
+        super.onDestroy();
     }
 }
