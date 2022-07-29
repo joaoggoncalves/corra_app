@@ -33,5 +33,5 @@
     <string name="horariocard">Start Time:</string>
     <string name="tempocard">Duration:</string>
     <string name="distcard">Distance:</string>
-    <string name="datacard">Data:</string>
+    <string name="datacard">Date:</string>
 </resources>
