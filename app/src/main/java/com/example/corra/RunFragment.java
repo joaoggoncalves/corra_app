@@ -107,6 +107,9 @@ public class RunFragment extends Fragment {
                         runTime = sharedPref.getInt(getString(R.string.correndo), 0);
                         walkTime = sharedPref.getInt(getString(R.string.andando), 0);
                         reps = sharedPref.getInt(getString(R.string.reps), 0);
+                        if (reps == 0) {
+                            reps = -1;
+                        }
                         interObj = new Intervalada(reps, walkTime, runTime, holdVib);
                     }
                 }
@@ -232,6 +235,7 @@ public class RunFragment extends Fragment {
                         interObj.handleRepetition();
                         if(interObj.getRepeat() == 0) {
                             startIntervalda = false;
+                            btnPause.callOnClick();
                         }
                         if (interObj.getLoop()) {
                             intervalotv.setText(R.string.walkinterval);
