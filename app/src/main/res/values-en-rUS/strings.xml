@@ -5,7 +5,7 @@
     <string name="dialog_title">Permission denied.</string>
     <string name="home">Home</string>
     <string name="corrida">Run</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="contextmenutitle">Pick an action</string>
     <string name="gpsdialogmessage">The application requires location services to be enabled.</string>
     <string name="gpsdialogtitle">GPS Disabled</string>
@@ -34,4 +34,6 @@
     <string name="tempocard">Duration:</string>
     <string name="distcard">Distance:</string>
     <string name="datacard">Date:</string>
+    <string name="corrida_do_dia">Corrida do Dia:</string>
+    <string name="speed">Speed</string>
 </resources>

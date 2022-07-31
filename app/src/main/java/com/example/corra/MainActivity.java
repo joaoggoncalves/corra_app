@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
@@ -22,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     AlertDialog.Builder builder;
     private static final int PERMISSION_REQUEST_CODE = 99;
     NavigationBarView bottomNavigationView;
+    NavHostFragment navHostFragment;
+    NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Obtem navController
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        final NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        final NavController navController = navHostFragment.getNavController();
+        navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        navController = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
         //Controla bottomNav
@@ -67,6 +70,13 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show();
                 bottomNavigationView.getMenu().getItem(1).setEnabled(false);
             }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (navController.getCurrentDestination().getId() != R.id.nav_corrida) {
+            super.onBackPressed();
         }
     }
 }

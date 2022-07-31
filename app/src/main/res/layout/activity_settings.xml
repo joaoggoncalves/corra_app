@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         android:text="@string/tempo_andando_segundos"
         android:textColor="@color/design_default_color_on_secondary"
         android:visibility="invisible"
@@ -83,11 +83,11 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/_0"
+        android:importantForAutofill="no"
         android:inputType="number"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/repeticoesstring"
-        app:layout_constraintTop_toBottomOf="@+id/repeticoesstring"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/repeticoesstring" />
 
     <Button
         android:id="@+id/btn_savesettings"

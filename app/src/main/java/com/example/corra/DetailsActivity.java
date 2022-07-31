@@ -1,5 +1,6 @@
 package com.example.corra;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,6 +21,8 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+        ActionBar barra = getSupportActionBar();
+        barra.setDisplayHomeAsUpEnabled(true);
         CorridaViewmodel viewmodel = new ViewModelProvider(this).get(CorridaViewmodel.class);
         Intent intent = getIntent();
         int uid = intent.getIntExtra(EXTRA_ID, 0);

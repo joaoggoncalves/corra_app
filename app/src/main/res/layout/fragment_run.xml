@@ -14,7 +14,6 @@
         android:layout_marginTop="16dp"
         android:textColor="@color/black"
         android:textSize="32sp"
-        app:layout_constraintEnd_toEndOf="@+id/tempostring"
         app:layout_constraintStart_toStartOf="@+id/tempostring"
         app:layout_constraintTop_toBottomOf="@+id/tempostring" />
 
@@ -40,9 +39,8 @@
         android:text="@string/zero"
         android:textColor="@color/black"
         android:textSize="32sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pacestring" />
+        app:layout_constraintStart_toStartOf="@+id/velstring"
+        app:layout_constraintTop_toBottomOf="@+id/velstring" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/stop_fab"
@@ -66,7 +64,6 @@
         android:text="@string/zero"
         android:textColor="@color/black"
         android:textSize="32sp"
-        app:layout_constraintEnd_toEndOf="@+id/distanciastring"
         app:layout_constraintStart_toStartOf="@+id/distanciastring"
         app:layout_constraintTop_toBottomOf="@+id/distanciastring" />
 
@@ -114,14 +111,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/pacestring"
+        android:id="@+id/velstring"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="@string/pace"
+        android:text="@string/speed"
         android:textSize="32sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/chronometer"
         app:layout_constraintTop_toBottomOf="@+id/chronometer" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -148,5 +144,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/barra" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pace"
+        android:textSize="32sp"
+        app:layout_constraintStart_toStartOf="@+id/distanciastring"
+        app:layout_constraintTop_toTopOf="@+id/velstring" />
+
+    <TextView
+        android:id="@+id/pacetv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/zero"
+        android:textColor="@color/black"
+        android:textSize="32sp"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="@+id/speedtv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

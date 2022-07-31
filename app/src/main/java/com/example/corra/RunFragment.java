@@ -47,6 +47,7 @@ public class RunFragment extends Fragment {
     TextView speedtv;
     TextView distanciatv;
     TextView intervalotv;
+    TextView pacetv;
     FloatingActionButton btnPause;
     FloatingActionButton btnStop;
     FloatingActionButton btnSettings;
@@ -200,6 +201,7 @@ public class RunFragment extends Fragment {
         final Handler handler = new Handler();
         speedtv = getView().findViewById(R.id.speedtv);
         distanciatv = getView().findViewById(R.id.distanciatv);
+        pacetv = getView().findViewById(R.id.pacetv);
         SpeedListener speedListener = new SpeedListener();
         LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -227,6 +229,8 @@ public class RunFragment extends Fragment {
                         velocidades.add(Float.parseFloat(speedtv.getText().toString().replace(",", ".")));
                         long tempodist = Duration.ofMillis(SystemClock.elapsedRealtime() - chronometer.getBase()).getSeconds();
                         double dist = (velocidades.stream().mapToDouble(d -> d).average().orElse(0.0)) * (tempodist/3600.0);
+                        double pace = (segundos/60.0)/dist;
+                        String velconversao = String.format(Locale.ENGLISH ,"%.2f min/Km", pace).replace(".", ":");
                         distanciatv.setText(String.format(Locale.getDefault(), "%.2f", dist));
                     }
                     segundos++;

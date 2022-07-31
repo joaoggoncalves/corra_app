@@ -39,4 +39,6 @@
     <string name="tempocard">Tempo:</string>
     <string name="distcard">Distância:</string>
     <string name="datacard">Data:</string>
+    <string name="corrida_do_dia">Corrida do Dia:</string>
+    <string name="speed">Vel</string>
 </resources>
