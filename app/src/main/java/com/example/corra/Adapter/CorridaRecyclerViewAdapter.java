@@ -72,7 +72,7 @@ public class CorridaRecyclerViewAdapter extends RecyclerView.Adapter<CorridaRecy
             String formatada = tempo.substring(0,2) + "m " + tempo.substring(3,5) + "s";
             holder.tempoTv.setText(formatada);
         }
-        holder.distTv.setText(String.format(Locale.getDefault(), "%.2f Km", (mList.get(position).getVelocidade()*(mList.get(position).getTempo()/3600.0))));
+        holder.distTv.setText(String.format(Locale.getDefault(), "%.2f Km", (mList.get(position).getVelocidade()*(Duration.ofMillis(mList.get(position).getTempo()).getSeconds()/3600.0))));
         holder.horaTv.setText(mList.get(position).getData().substring(11));
     }
 
