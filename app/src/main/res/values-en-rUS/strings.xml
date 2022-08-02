@@ -14,15 +14,14 @@
     <string name="pace">Pace</string>
     <string name="descricao_botao_stop">Button Finishes Current Run</string>
     <string name="btnsettings">Button that redirects to the run settings</string>
-    <string name="habilitar_treino_intervalado">Habilitar treino intervalado</string>
-    <string name="tempo_correndo_segundos">Tempo correndo (segundos)</string>
+    <string name="habilitar_treino_intervalado">Enable Interval Training</string>
+    <string name="tempo_correndo_segundos">Time running (seconds)</string>
     <string name="_30">30</string>
-    <string name="repeti_es_0_indeterminado">Repetições (0 indeterminado)</string>
+    <string name="repeti_es_0_indeterminado">Repetitions (0 for indefinite)</string>
     <string name="_0">0</string>
-    <string name="dist_ncia_meta_km_ou_em_branco">Distância Meta (Km ou em branco)</string>
     <string name="_5">5</string>
-    <string name="tempo_andando_segundos">Tempo andando (segundos):</string>
-    <string name="salvar">Salvar</string>
+    <string name="tempo_andando_segundos">Time walking (seconds):</string>
+    <string name="salvar">Save</string>
     <string name="walkinterval">Interval: Walking</string>
     <string name="runninginterval">Interval: Running</string>
     <string name="intervaldisabled">Intervals disabled</string>
@@ -34,6 +33,7 @@
     <string name="tempocard">Duration:</string>
     <string name="distcard">Distance:</string>
     <string name="datacard">Date:</string>
-    <string name="corrida_do_dia">Corrida do Dia:</string>
+    <string name="corrida_do_dia">Run From:</string>
     <string name="speed">Speed</string>
+    <string name="start_color"><![CDATA[<font color=#000000>Finish time: </font> <font color=##323232>]]></string>
 </resources>

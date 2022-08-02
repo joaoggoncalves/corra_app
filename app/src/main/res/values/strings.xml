@@ -20,7 +20,6 @@
     <string name="_30">30</string>
     <string name="repeti_es_0_indeterminado">Repetições (0 indeterminado)</string>
     <string name="_0">0</string>
-    <string name="dist_ncia_meta_km_ou_em_branco">Distância Meta (Km ou em branco)</string>
     <string name="_5">5</string>
     <string name="tempo_andando_segundos">Tempo andando (segundos):</string>
     <string name="salvar">Salvar</string>
@@ -41,4 +40,5 @@
     <string name="datacard">Data:</string>
     <string name="corrida_do_dia">Corrida do Dia:</string>
     <string name="speed">Vel</string>
+    <string name="start_color"><![CDATA[<font color=#000000>Fim: </font> <font color=##323232>]]></string>
 </resources>

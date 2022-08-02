@@ -229,8 +229,13 @@ public class RunFragment extends Fragment {
                         velocidades.add(Float.parseFloat(speedtv.getText().toString().replace(",", ".")));
                         long tempodist = Duration.ofMillis(SystemClock.elapsedRealtime() - chronometer.getBase()).getSeconds();
                         double dist = (velocidades.stream().mapToDouble(d -> d).average().orElse(0.0)) * (tempodist/3600.0);
-                        double pace = (segundos/60.0)/dist;
-                        String velconversao = String.format(Locale.ENGLISH ,"%.2f min/Km", pace).replace(".", ":");
+                        if (segundos > 0 && dist != 0.0) {
+                            double pace = (segundos/60.0)/dist;
+                            int mins = (int) pace;
+                            String pacedisplay =  mins + ":" + (int) (60 *  (pace - mins)) + " min/Km";
+                            //String velconversao = String.format(Locale.ENGLISH ,"%.2f min/Km", pace).replace(".", ":");
+                            pacetv.setText(pacedisplay);
+                        }
                         distanciatv.setText(String.format(Locale.getDefault(), "%.2f", dist));
                     }
                     segundos++;
