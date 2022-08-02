@@ -41,4 +41,6 @@
     <string name="datacard">Data:</string>
     <string name="corrida_do_dia">Corrida do Dia:</string>
     <string name="speed">Vel</string>
+    <string name="ttsText">Você correu um quilômetro</string>
+
 </resources>

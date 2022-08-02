@@ -63,6 +63,8 @@ public class RunFragment extends Fragment {
     boolean startIntervalda;
     Vibrator holdVib;
     SharedPreferences sharedPref;
+    TTS voice;
+    double auxTTS = 1.0f;
 
     //Chronometer Variables
     private Chronometer chronometer;
@@ -92,7 +94,7 @@ public class RunFragment extends Fragment {
         navBar = getActivity().findViewById(R.id.bottomNavigationView);
         ActionBar barra = ((AppCompatActivity)getActivity()).getSupportActionBar();
         barra.setTitle(R.string.actionbartitlecorrida);
-
+        voice = new TTS(savedInstanceState, getContext());
         btnPause.setOnClickListener(v -> {
             if(rodandoprimeiravez) {
                 //Intervalado Shared Preferences
@@ -224,7 +226,7 @@ public class RunFragment extends Fragment {
                     //Listener retorna médias
                     String vel = String.format(Locale.getDefault(), "%.2f", speedListener.avg);
                     speedtv.setText(vel);
-                    //Armazena velocidades a cada 10 segundos (idealmente)
+                    //Armazena velocidades a cada 5 segundos (idealmente)
                     if (segundos%5 == 0) {
                         velocidades.add(Float.parseFloat(speedtv.getText().toString().replace(",", ".")));
                         long tempodist = Duration.ofMillis(SystemClock.elapsedRealtime() - chronometer.getBase()).getSeconds();
@@ -232,8 +234,15 @@ public class RunFragment extends Fragment {
                         double pace = (segundos/60.0)/dist;
                         String velconversao = String.format(Locale.ENGLISH ,"%.2f min/Km", pace).replace(".", ":");
                         distanciatv.setText(String.format(Locale.getDefault(), "%.2f", dist));
+                        if(dist >= auxTTS) {
+                            auxTTS+=1;
+                            voice.ttsSpeak();
+                        }
                     }
+
                     segundos++;
+
+
                     if(startIntervalda) {
                         interObj.addHoldTime();
                         interObj.handleRepetition();
