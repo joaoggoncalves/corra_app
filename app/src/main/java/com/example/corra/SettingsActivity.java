@@ -23,7 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
     EditText repeticoesEdit;
     ActionBar barra;
     Button btnSave;
-
+    Boolean invalidInput;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,20 +63,29 @@ public class SettingsActivity extends AppCompatActivity {
             //Editor shared preferences
             SharedPreferences sharedPref = this.getSharedPreferences("settings", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
-            if (intervalCb.isChecked()) {
-                if (checkValues(andandoEdit, false) && checkValues(correndoEdit, false) && checkValues(repeticoesEdit, true)) {
-                    //Caso valores sejam válidos armazenar no arquivo.
+            invalidInput = false;
+            if(intervalCb.isChecked()) {
+                if(!checkValues(andandoEdit, false)) {
+                    andandoEdit.setError("Valor inválido");
+                    invalidInput = true;
+                }
+                 if(!checkValues(correndoEdit, false)){
+                    correndoEdit.setError("Valor inválido");
+                     invalidInput = true;
+                }
+                 if(!checkValues(repeticoesEdit, true)) {
+                     repeticoesEdit.setError("Valor inválido");
+                     invalidInput = true;
+                }
+                if(!invalidInput) {
                     editor.putInt(getString(R.string.andando), Integer.parseInt(andandoEdit.getText().toString().trim()));
                     editor.putInt(getString(R.string.correndo), Integer.parseInt(correndoEdit.getText().toString().trim()));
                     editor.putInt(getString(R.string.reps), Integer.parseInt(repeticoesEdit.getText().toString().trim()));
                     editor.putBoolean(getString(R.string.intervalado), true);
                     editor.apply();
                     finish();
-                } else {
-                    andandoEdit.setError("Valores inválidos");
-                    correndoEdit.setError("Valores inválidos");
-                    repeticoesEdit.setError("Valores inválidos");
                 }
+
             }
         });
     }
