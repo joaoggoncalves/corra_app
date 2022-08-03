@@ -197,6 +197,8 @@ public class RunFragment extends Fragment {
     private void startSpeed() {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            navBar.getMenu().getItem(0).setEnabled(true);
+            navBar.getMenu().getItem(1).setEnabled(true);
             navBar.setSelectedItemId(R.id.homebottomnav);
             return;
         }
@@ -211,6 +213,8 @@ public class RunFragment extends Fragment {
             builder.setMessage(getString(R.string.gpsdialogmessage)).setTitle(getString(R.string.gpsdialogtitle)).setNeutralButton(R.string.ok, null);
             AlertDialog dialog = builder.create();
             dialog.show();
+            navBar.getMenu().getItem(0).setEnabled(true);
+            navBar.getMenu().getItem(1).setEnabled(true);
             navBar.setSelectedItemId(R.id.homebottomnav);
             return;
         }
