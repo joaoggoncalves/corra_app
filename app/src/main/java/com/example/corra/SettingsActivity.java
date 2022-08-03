@@ -69,9 +69,9 @@ public class SettingsActivity extends AppCompatActivity {
                     andandoEdit.setError("Valor inválido");
                     invalidInput = true;
                 }
-                 if(!checkValues(correndoEdit, false)){
+                 if(!checkValues(correndoEdit, false)) {
                     correndoEdit.setError("Valor inválido");
-                     invalidInput = true;
+                    invalidInput = true;
                 }
                  if(!checkValues(repeticoesEdit, true)) {
                      repeticoesEdit.setError("Valor inválido");
@@ -85,7 +85,6 @@ public class SettingsActivity extends AppCompatActivity {
                     editor.apply();
                     finish();
                 }
-
             }
         });
     }
