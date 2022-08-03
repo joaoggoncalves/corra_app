@@ -187,8 +187,7 @@ public class RunFragment extends Fragment {
         Vibrator holdVib;
         if (Build.VERSION.SDK_INT >=31) {
             holdVib = ((VibratorManager) this.getContext().getSystemService(Context.VIBRATOR_MANAGER_SERVICE)).getDefaultVibrator();
-        }
-        else  {
+        } else  {
             holdVib = (Vibrator) this.getContext().getSystemService(Context.VIBRATOR_SERVICE);
         }
         return holdVib;
@@ -230,6 +229,7 @@ public class RunFragment extends Fragment {
                     //Listener retorna médias
                     String vel = String.format(Locale.getDefault(), "%.2f", speedListener.avg);
                     speedtv.setText(vel);
+
                     //Armazena velocidades a cada 5 segundos (idealmente)
                     if (segundos%5 == 0) {
                         velocidades.add(Float.parseFloat(speedtv.getText().toString().replace(",", ".")));
@@ -247,10 +247,7 @@ public class RunFragment extends Fragment {
                             voice.ttsSpeak();
                         }
                     }
-
                     segundos++;
-
-
                     if(startIntervalda) {
                         interObj.addHoldTime();
                         interObj.handleRepetition();
