@@ -238,7 +238,7 @@ public class RunFragment extends Fragment {
                         double pace = (segundos/60.0)/dist;
                         if (pace < 60.0) {
                             int mins = (int) pace;
-                            String pacedisplay = mins + ":" + (int) (60 * (pace - mins)) + " min/Km";
+                            String pacedisplay = mins + ":" + (int) (60 * (pace - mins));
                             pacetv.setText(pacedisplay);
                         }
                         distanciatv.setText(String.format(Locale.getDefault(), "%.2f", dist));

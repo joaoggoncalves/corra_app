@@ -14,7 +14,7 @@
         android:buttonTint="@color/azul_secundario"
         android:checked="false"
         android:text="@string/habilitar_treino_intervalado"
-        android:textSize="14sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,9 +36,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="64dp"
         android:text="@string/tempo_andando_segundos"
         android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="20sp"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/intervalcb" />
@@ -50,6 +51,7 @@
         android:layout_marginTop="32dp"
         android:text="@string/tempo_correndo_segundos"
         android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="20sp"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/tempoandandostring"
         app:layout_constraintTop_toBottomOf="@+id/tempoAndandoInput" />
@@ -73,6 +75,7 @@
         android:layout_marginTop="32dp"
         android:text="@string/repeti_es_0_indeterminado"
         android:textColor="@color/design_default_color_on_secondary"
+        android:textSize="20sp"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="@+id/tempocorrendostring"
         app:layout_constraintTop_toBottomOf="@+id/tempoCorrendoInput" />

@@ -2,17 +2,13 @@ package com.example.corra;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.example.corra.Database.CorridaViewmodel;
-import com.example.corra.Model.Corrida;
 
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -48,8 +44,7 @@ public class DetailsActivity extends AppCompatActivity {
             String data = corrida.getData().substring(0, 10);
             String hora = corrida.getData().substring(11);
             datatv.setText(data);
-            String hr = getString(R.string.start_color) + hora + "</font>";
-            horariotv.setText(Html.fromHtml(hr));
+            horariotv.setText(hora);
             disttv.setText(String.format(Locale.getDefault(), "%.2f KM", (corrida.getVelocidade()*(Duration.ofMillis(corrida.getTempo()).getSeconds()/3600.0))));
             if (Duration.ofMillis(corrida.getTempo()).getSeconds() > 3600) {
                 String tempo = getDateFromMillis(corrida.getTempo());
@@ -63,8 +58,10 @@ public class DetailsActivity extends AppCompatActivity {
             double pace = 1/(corrida.getVelocidade()/60);
             if (pace < 60.0) {
                 int mins = (int) pace;
-                String pacedisplay = mins + ":" + (int) (60 * (pace - mins)) + " min/Km";
+                String pacedisplay = mins + ":" + (int) (60 * (pace - mins));
                 pacetv.setText(pacedisplay);
+            } else {
+                pacetv.setText(getString(R.string.zero));
             }
         });
     }

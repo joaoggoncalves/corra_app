@@ -43,4 +43,7 @@
     <string name="ttsText">Você correu um quilômetro</string>
     <string name="start_color"><![CDATA[<font color=#000000>Fim: </font> <font color=##323232>]]></string>
     <string name="invalidos">Valores inválidos</string>
+    <string name="ritmo">Ritmo:</string>
+    <string name="min_km">Min/Km</string>
+    <string name="km_h">Km/h</string>
 </resources>
