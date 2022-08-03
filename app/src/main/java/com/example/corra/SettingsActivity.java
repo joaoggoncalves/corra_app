@@ -73,9 +73,9 @@ public class SettingsActivity extends AppCompatActivity {
                     editor.apply();
                     finish();
                 } else {
-                    andandoEdit.setError("Valores inválidos");
-                    correndoEdit.setError("Valores inválidos");
-                    repeticoesEdit.setError("Valores inválidos");
+                    andandoEdit.setError(getString(R.string.invalidos));
+                    correndoEdit.setError(getString(R.string.invalidos));
+                    repeticoesEdit.setError(getString(R.string.invalidos));
                 }
             }
         });

@@ -60,12 +60,12 @@ public class DetailsActivity extends AppCompatActivity {
                 String formatada = tempo.substring(0,2) + "m " + tempo.substring(3,5) + "s";
                 tempotv.setText(formatada);
             }
-            //double pace = ((Duration.ofMillis(corrida.getTempo()).getSeconds())/60.0)/(corrida.getVelocidade()*(Duration.ofMillis(corrida.getTempo()).getSeconds()/3600.0));
             double pace = 1/(corrida.getVelocidade()/60);
-            int mins = (int) pace;
-            String pacedisplay =  mins + ":" + (int) (60 *  (pace - mins)) + " min/Km";
-            //String pacedisplay = String.format(Locale.ENGLISH ,"%.2f min/Km", pace).replace(".", ":");
-            pacetv.setText(pacedisplay);
+            if (pace < 60.0) {
+                int mins = (int) pace;
+                String pacedisplay = mins + ":" + (int) (60 * (pace - mins)) + " min/Km";
+                pacetv.setText(pacedisplay);
+            }
         });
     }
 

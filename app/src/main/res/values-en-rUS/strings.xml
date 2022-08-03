@@ -37,4 +37,5 @@
     <string name="speed">Speed</string>
     <string name="ttsText">You ran one kilometer</string>
     <string name="start_color"><![CDATA[<font color=#000000>Finish time: </font> <font color=##323232>]]></string>
+    <string name="invalidos">Invalid Values</string>
 </resources>
