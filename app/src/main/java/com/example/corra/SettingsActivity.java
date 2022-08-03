@@ -66,15 +66,15 @@ public class SettingsActivity extends AppCompatActivity {
             invalidInput = false;
             if(intervalCb.isChecked()) {
                 if(!checkValues(andandoEdit, false)) {
-                    andandoEdit.setError("Valor inválido");
+                    andandoEdit.setError(getString(R.string.invalidos));
                     invalidInput = true;
                 }
                  if(!checkValues(correndoEdit, false)) {
-                    correndoEdit.setError("Valor inválido");
+                    correndoEdit.setError(getString(R.string.invalidos));
                     invalidInput = true;
                 }
                  if(!checkValues(repeticoesEdit, true)) {
-                     repeticoesEdit.setError("Valor inválido");
+                     repeticoesEdit.setError(getString(R.string.invalidos));
                      invalidInput = true;
                 }
                 if(!invalidInput) {
